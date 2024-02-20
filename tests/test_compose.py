@@ -8,5 +8,5 @@ def test_pipeline():
     data = "Hello, World!"
     digest = get_hash(data)
     assert len(digest) == 42
-    assert digest.startswith("z")
+    assert digest.startswith("z5")
     assert digest == "z5dbMfGzi9pjjDf5Uv7bVDqgPPMGAkrRDmEqSoVquB"
