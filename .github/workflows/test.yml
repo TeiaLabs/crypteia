@@ -44,4 +44,4 @@ jobs:
           pip install .
       - name: Test.
         working-directory: .
-        run: pytest ./tests/
+        run: pytest ./tests/ --tb=line --show-capture=no
