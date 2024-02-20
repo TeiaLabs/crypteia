@@ -1,4 +1,8 @@
-from setuptools import find_packages, setup
+import shlex
+import subprocess
+from pathlib import Path
+
+import setuptools
 
 
 def read_multiline_as_list(file_path: str) -> list[str]:
@@ -9,14 +13,27 @@ def read_multiline_as_list(file_path: str) -> list[str]:
         return contents
 
 
+def get_version() -> str:
+    raw_git_cmd = "git describe --tags --abbrev=0"
+    git_cmd = shlex.split(raw_git_cmd)
+    git = subprocess.check_output(git_cmd)
+    return git.decode().strip()
+
+
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 requirements = read_multiline_as_list("requirements.txt")
 
-setup(
+setuptools.setup(
     name="crypteia",
-    version="1.0.0",
+    version=get_version(),
     author="Nei Cardoso de Oliveira Neto",
     author_email="nei@teialabs.com",
     description="Cryptographer's content-addressing companion.",
-    packages=find_packages("crypteia"),
+    long_description=long_description,
+    long_description_content_type="text/markdown",
+    packages=setuptools.find_packages("crypteia"),
+    python_requires=">=3.11",
     install_requires=requirements,
 )
